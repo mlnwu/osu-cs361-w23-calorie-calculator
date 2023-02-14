@@ -1,3 +1,8 @@
+# Name: Maggie Wu
+# Github UN: wumag
+# Date: 02/14/2023
+# Description: Server code to receive data
+
 import zmq
 import time
 import os
