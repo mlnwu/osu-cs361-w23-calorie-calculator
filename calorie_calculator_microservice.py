@@ -1,3 +1,8 @@
+# Name: Maggie Wu
+# Github UN: wumag
+# Date: 02/14/2023
+# Description: Calorie calculator program that writes data to a file
+
 import datetime
 
 def main():
