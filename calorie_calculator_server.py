@@ -6,14 +6,13 @@ context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://*:6666")
 
-history = [
-    "User gender: f",
-    "User weight(kgs): 55.0",
-    "User height(cm): 166.0",
-    "User age: 23",
-    "User activity level: active",
-    "You need to eat 2547.8250000000003 calories a day to maintain your current weight"
-]
+# Read the path from the request.txt file
+with open('request.txt', 'r') as f:
+    path = f.read().strip()
+
+# Open the calorie-calculator-2023-02-08.txt file and read its contents line by line
+with open(path, 'r') as f:
+    history = [line.strip() for line in f]
 
 clear = lambda: os.system('clear')
 
