@@ -13,12 +13,17 @@ clear()
 socket = context.socket(zmq.REQ)
 socket.connect("tcp://localhost:6666")
 
-requests = ["calorie_calculator-2023-02-08.txt gender",
-            "calorie_calculator-2023-02-08.txt weight",
-            "calorie_calculator-2023-02-08.txt height",
-            "calorie_calculator-2023-02-08.txt age",
-            "calorie_calculator-2023-02-08.txt activity",
-            "calorie_calculator-2023-02-08.txt calories"]
+with open('request.txt', 'r') as f:
+    path = f.read().strip()
+filename = os.path.basename(path)
+name_without_extension, extension = os.path.splitext(filename)
+
+requests = ["{}{} {}".format(name_without_extension, extension, "gender"),
+            "{}{} {}".format(name_without_extension, extension, "weight"),
+            "{}{} {}".format(name_without_extension, extension, "height"),
+            "{}{} {}".format(name_without_extension, extension, "age"),
+            "{}{} {}".format(name_without_extension, extension, "activity"),
+            "{}{} {}".format(name_without_extension, extension, "calories")]
 for request in requests:
     print(f"Sending request '{request}'...")
     socket.send_string(request)
