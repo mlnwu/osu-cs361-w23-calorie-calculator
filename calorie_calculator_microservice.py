@@ -39,7 +39,7 @@ def sex(f):
     user_sex = user_sex.lower()
     if user_sex not in ("male", "female", "m", "f"):
         user_sex = str(input("Invalid input. Please enter either 'male' or 'female' "))
-    f.write(f"\nUser gender: {user_sex}")
+    f.write(f"User gender: {user_sex}")
     return user_sex
 
 
@@ -83,7 +83,7 @@ def get_height(f):
         else:
             height_in += height_ft * 12
             height_cm = height_in * 2.54
-            f.write(f"\nUser height(ft/cm): {height_ft}, {height_cm}")
+            f.write(f"\nUser height(ft/in): {height_ft}, {height_in}")
             return height_cm
     
     if cm_or_ft == "cm":
