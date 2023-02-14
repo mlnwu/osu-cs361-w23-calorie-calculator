@@ -1,3 +1,8 @@
+# Name: Maggie Wu
+# Github UN: wumag
+# Date: 02/14/2023
+# Description: Client code to send requests
+
 import zmq
 import time
 import os
