@@ -6,8 +6,11 @@
 import datetime
 
 def main():
+    # Create file name using current date
     current_date = datetime.datetime.now().strftime("%Y-%m-%d")
     file_name = f"calorie-calculator-{current_date}.txt"
+
+    # Open the file in write mode
     with open(file_name, 'w') as f:
         while True:
             welcome()
@@ -18,18 +21,17 @@ def main():
             age = get_age(f)
             rest_bmr = calculate_bmr(gender, weight, height, age)
             total_calculation(rest_bmr, f)
-
             play = input("\nPress enter to recalculate or type 'exit' to stop the program: ")
             play = play.lower()
             if play == "exit":
                 print("\nProgram terminating...")
                 break
        
-
+# Prints welcome message
 def welcome():
     print("\nWelcome to your Calorie Calculator!\nFind out how many calories should you eat daily to maintain your current weight.")
 
-
+# Prints information about BMR and calories
 def info():
     learn_more = str(input("\nDo you wish to learn more about BMR and calories before calculating? "))
     learn_more = learn_more.lower()
@@ -38,7 +40,7 @@ def info():
     else:
         return learn_more
 
-
+# Gets user input for gender and writes to file
 def sex(f):
     user_sex = str(input("\nDo you identify as male or female? "))
     user_sex = user_sex.lower()
@@ -47,7 +49,7 @@ def sex(f):
     f.write(f"User gender: {user_sex}")
     return user_sex
 
-
+# Gets user input for weight and writes to file
 def get_weight(f):
     kgs_or_lbs = str(input("Would you like to calculate your weight in kgs or lbs?: "))
     kgs_or_lbs = kgs_or_lbs.lower()
@@ -55,6 +57,7 @@ def get_weight(f):
         kgs_or_lbs = str(input("Invalid input. Would you like to calculate your weight in kgs or lbs?: "))
     
     if kgs_or_lbs == "lbs":
+        # Convert weight from lbs to kgs and write to file
         weight_lbs = float(input("Enter your weight in lbs: "))
         while weight_lbs <= 0:
             weight_lbs = float(input("Invalid input. Please enter your weight in lbs: "))
@@ -71,7 +74,7 @@ def get_weight(f):
             f.write(f"\nUser weight(kgs): {weight_kgs}")
             return weight_kgs
 
-
+# Gets user input for height and writes to file
 def get_height(f):
     cm_or_ft = str(input("Would you like to calculate your height in cm or ft?: "))
     cm_or_ft = cm_or_ft.lower()
@@ -79,6 +82,7 @@ def get_height(f):
         cm_or_ft = str(input("Invalid input. Would you like to calculate your height in cm or ft?: "))
 
     if cm_or_ft == "ft":
+        # Convert height from ft/in to cm and write to file
         height_ft = float(input("Enter your height, feet first: "))
         while height_ft <= 0:
             height_ft = float(input("Invalid input. Please enter your height in feet: "))  
@@ -99,7 +103,7 @@ def get_height(f):
             f.write(f"\nUser height(cm): {height_cm}")
             return height_cm
 
-
+# Gets user input for age and writes to file
 def get_age(f):
     age_yrs = int(input("Enter your age in years: "))
     while age_yrs <= 0:
@@ -108,6 +112,7 @@ def get_age(f):
         f.write(f"\nUser age: {age_yrs}")
         return age_yrs
 
+# Gets user input for activity level and writes to file
 def get_user_activity(f):
     activity_lvl = ["sedentary", "light", "moderate", "active"]
     while True:
@@ -121,7 +126,7 @@ def get_user_activity(f):
             f.write(f"\nUser activity level: {user_lvl}")
             return user_lvl
 
-
+# Calculates total calories based on BMR and activity level to maintain current weight and writes to file
 def total_calculation(rest_bmr, f):
     user_activity_lvl = get_user_activity(f)
 
@@ -148,7 +153,7 @@ def total_calculation(rest_bmr, f):
         f.write("\nYou need to eat " + str(maintain["active"]) + " calories a day to maintain your current weight.")
         print("\nYou need to eat " + str(maintain["active"]) + " calories a day to maintain your current weight.")
 
-
+# Calculates Resting Basal Metabolic Rate (BMR) by gender
 def calculate_bmr(gender, weight, height, age):
     female = ["female", "f"]
     if gender == female:
@@ -158,6 +163,7 @@ def calculate_bmr(gender, weight, height, age):
         men = (weight * 10) + (height * 6.25) - (age * 5) + 5
         return int(men)
 
+# Multiply BMR by activity levels
 def get_sedentary(rest_bmr):
     sedentary = rest_bmr * 1.25
     return sedentary
