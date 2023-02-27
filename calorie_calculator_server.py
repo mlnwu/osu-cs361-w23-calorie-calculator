@@ -7,26 +7,23 @@ import zmq
 import time
 import os
 
-# Create a ZeroMQ context object and socket object, and bind to port 6666
 context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://*:6666")
 
-# Read the path from the request.txt file, and read the contents of the file into a list
+# Read the path from the request.txt file and read the contents of the file into a list
 with open('request.txt', 'r') as f:
     path = f.read().strip()
 with open(path, 'r') as f:
     history = [line.strip() for line in f]
 
-# Define a lambda function that clears the console
+# Lambda function that clears the console
 clear = lambda: os.system('clear')
 
-# Print a message indicating connection to Calorie Calculator and clear the console after a 5 second delay
 print("Connecting to Calorie Calculator...")
 time.sleep(5)
 clear()
 
-# Define a function to handle incoming requests
 def main():
     while True:
         msg = socket.recv()
@@ -39,25 +36,9 @@ def main():
         variable = str(params[1])
 
         # Determine which element of the history list to send back to the client based on the requested variable
-        if variable == 'gender':
-            i = 0
-        
-        if variable == 'weight':
-            i = 1
+        var_dict = {'gender': 0, 'weight': 1, 'height': 2, 'age': 3, 'activity': 4, 'calories': 5}
+        i = var_dict.get(variable, -1)  # Returns -1 if variable is not found in var_dict
 
-        if variable == 'height':
-            i = 2
-
-        if variable == 'age':
-            i = 3  
-
-        if variable == 'activity':
-            i = 4
-
-        if variable == 'calories':
-            i = 5
-
-        # Send the requested element of the history list back to the client
         socket.send_string(history[i])
         print("Response sent to client!")
         print("--------------------------------")
